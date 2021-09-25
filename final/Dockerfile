@@ -35,7 +35,8 @@ ADD tmp.tar .
 
 ENV ASPNETCORE_URLS=http://+:8080 \
     DOTNET_RUNNING_IN_CONTAINER=true \
-    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true \
+    COMPlus_EnableDiagnostics=0
 
 WORKDIR /app
 COPY --from=build-env --chown=1111:1111 /app/out ./
