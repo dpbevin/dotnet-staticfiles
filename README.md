@@ -33,9 +33,11 @@ Why is the last one different? Because I've further hardened the image by runnin
 
 ## Why Distroless?
 
-Don't listen to me, listen to these guys -> https://github.com/GoogleContainerTools/distroless.
+Don't listen to me, listen to these guys...
+- https://github.com/GoogleContainerTools/distroless
+- https://cloud.redhat.com/blog/hardening-docker-containers-images-and-host-security-toolkit
 
-The TL;DR; is that distroless images only contain YOUR application. No shells such as Bash, Sh, etc.
+The TL;DR; is that distroless images only contain YOUR application and its dependencies. No shells such as bash, sh, etc.
 
 ## Examing the images
 
