@@ -19,17 +19,39 @@ Why is the last one different? Because I've further hardened the image by runnin
 
 ## Results
 
-|Image|Size|
-|---|---|
-|1 - Nginx | 133MB |
-|2 - .NET 5.0.5 (default tag) | 206MB |
-|3 - .NET 5.0.5 Focal | 213MB |
-|4 - .NET 5.0.5 Alpine 3.12 | 103MB |
-|5 - .NET 5.0.5 Alpine 3.13 | 103MB |
-|6 - .NET 5.0.5 Buster Slim | 206MB |
-|7 - .NET 5.0.5 Runtime Deps | 50.2MB |
-|8 - .NET 5.0.5 Distroless TAKE ONE (Alpine 3.13) | 81.5MB |
-|9 - .NET 5.0.5 Distroless TAKE TWO (Runtime Deps) | 48.4MB |
+| Image|.NET App Publish Approach|Size|
+|---|---|---|
+| 1 - Nginx | N/A | 133MB |
+| 2 - .NET 5.0.5 (default tag) | Framework-Dependent | 206MB |
+| 3 - .NET 5.0.5 Focal | Framework-Dependent | 213MB |
+| 4 - .NET 5.0.5 Alpine 3.12 | Framework-Dependent | 103MB |
+| 5 - .NET 5.0.5 Alpine 3.13 | Framework-Dependent | 103MB |
+| 6 - .NET 5.0.5 Buster Slim | Framework-Dependent | 206MB |
+| 7 - .NET 5.0.5 Runtime Deps | Self-Contained | 50.2MB |
+| 8 - .NET 5.0.5 Distroless TAKE ONE (Alpine 3.13) | Self-Contained | 81.5MB |
+| 9 - .NET 5.0.5 Distroless TAKE TWO (Runtime Deps) | Self-Contained | 48.4MB |
+
+## So I should use Self-Contained then, right?
+
+As always... it depends.
+
+Take a second to read this article by Andrew Lock on the topic https://andrewlock.net/should-i-use-self-contained-or-framework-dependent-publishing-in-docker-images/.
+
+The summary at the end goes to explain about how Docker caches layers. So if you have multiple images using the same layers, then you will likely see benefit from caching layers.
+
+Here's the recreation of the table from Andrew's post with the new information:
+
+| Layer | Cached? | Framework-dependent | Self-contained |
+|---|---|---|---|
+| Base runtime dependencies | Yes | 8.4MB | 8.4MB |
+| Shared framework layer| Yes | 93MB | - |
+| Application DLLs| No | 269KB | 40MB |
+| Total | | 102.4MB | 48.4MB |
+| Total (excluding cached)| | 269kB | 40MB |
+
+Obviously, the test application here is really simple and the difference between loading 269kB vs 40MB on modern hardware is probably minimal. So, deciding between Framework-dependent or Self-contained will largely depend on your circumstances.
+
+However, I can strongly recomment going Distroless...
 
 ## Why Distroless?
 
@@ -48,7 +70,7 @@ Run the command:
 dive dpbevin/staticfiles-9-distroless2
 ```
 
-# References
+## References
 
 - https://github.com/dotnet/dotnet-docker/issues/2074
 - https://ariadne.space/2021/09/09/introducing-witchery-tools-for-building-distroless-images-with-alpine/
