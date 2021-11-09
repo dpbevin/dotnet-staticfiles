@@ -1,5 +1,7 @@
 # .NET Static Files - Docker Image Sizes
 
+**UPDATED FOR .NET 6.0 IMAGES AND NEW HOSTING MODEL**
+
 ## Docker Commands
 
 See the `build.ps1` script for the commands used to generate these images.
@@ -30,6 +32,9 @@ Why is the last one different? Because I've further hardened the image by runnin
 | 7 - .NET 5.0.5 Runtime Deps | Self-Contained | 50.2MB |
 | 8 - .NET 5.0.5 Distroless TAKE ONE (Alpine 3.13) | Self-Contained | 81.5MB |
 | 9 - .NET 5.0.5 Distroless TAKE TWO (Runtime Deps) | Self-Contained | 48.4MB |
+| 10 - **.NET 6.0** (default tag) | Framework-Dependent | 208MB |
+| 11 - **.NET 6.0** Runtime Deps | Self-Contained | 50.1MB |
+| 12 - **.NET 6.0** Distroless (Runtime Deps) | Self-Contained | 46.4MB |
 
 ## So I should use Self-Contained then, right?
 
