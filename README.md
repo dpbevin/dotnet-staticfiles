@@ -21,20 +21,22 @@ Why is the last one different? Because I've further hardened the image by runnin
 
 ## Results
 
-| Image|.NET App Publish Approach|Size|
-|---|---|---|
-| 1 - Nginx | N/A | 133MB |
-| 2 - .NET 5.0.5 (default tag) | Framework-Dependent | 206MB |
-| 3 - .NET 5.0.5 Focal | Framework-Dependent | 213MB |
-| 4 - .NET 5.0.5 Alpine 3.12 | Framework-Dependent | 103MB |
-| 5 - .NET 5.0.5 Alpine 3.13 | Framework-Dependent | 103MB |
-| 6 - .NET 5.0.5 Buster Slim | Framework-Dependent | 206MB |
-| 7 - .NET 5.0.5 Runtime Deps | Self-Contained | 50.2MB |
-| 8 - .NET 5.0.5 Distroless TAKE ONE (Alpine 3.13) | Self-Contained | 81.5MB |
-| 9 - .NET 5.0.5 Distroless TAKE TWO (Runtime Deps) | Self-Contained | 48.4MB |
-| 10 - **.NET 6.0** Bullseye Slim | Framework-Dependent | 208MB |
-| 11 - **.NET 6.0** Runtime Deps | Self-Contained | 50.1MB |
-| 12 - **.NET 6.0** Distroless (Runtime Deps) | Self-Contained | 46.4MB |
+| Image|.NET Version|.NET App Publish Approach|Size|
+|---|---|---|---|
+| 1 | N/A | N/A - **Nginx** | 133MB |
+| 2 | .NET 5.0.5 | Framework-Dependent, default Docker tag | 206MB |
+| 3 | .NET 5.0.5 | Framework-Dependent, Focal image | 213MB |
+| 4 | .NET 5.0.5 | Framework-Dependent, Alpine 3.12 image | 103MB |
+| 5 | .NET 5.0.5 | Framework-Dependent, Alpine 3.13 image | 103MB |
+| 6 | .NET 5.0.5 | Framework-Dependent, Buster Slim image | 206MB |
+| 7 | .NET 5.0.5 | Self-Contained, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | 50.2MB |
+| 8 | .NET 5.0.5 | Self-Contained, Distroless TAKE ONE (Alpine 3.13) | 81.5MB |
+| 9 | .NET 5.0.5 | Self-Contained, Distroless TAKE TWO (Runtime Deps)  | 48.4MB |
+| 10 | .NET 6.0 | Framework-Dependent, Bullseye Slim image | 208MB |
+| 11 | .NET 6.0 | Self-Contained, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | 50.1MB |
+| 12 | **.NET 6.0** | Self-Contained, **Trimmed**, Distroless (Runtime Deps) | **46.4MB** |
+| 13 | .NET 7.0 | Framework-Dependent, Bullseye Slim image | 209MB |
+| 14 | **.NET 7.0** | Self-Contained, **Trimmed**, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | **38.9MB** |
 
 ## So I should use Self-Contained then, right?
 
