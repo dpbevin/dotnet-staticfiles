@@ -37,6 +37,7 @@ Why is the last one different? Because I've further hardened the image by runnin
 | 12 | **.NET 6.0** | Self-Contained, **Trimmed**, Distroless (Runtime Deps) | **46.4MB** |
 | 13 | .NET 7.0 | Framework-Dependent, Bullseye Slim image | 209MB |
 | 14 | **.NET 7.0** | Self-Contained, **Trimmed**, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | **38.9MB** |
+| 15 | **.NET 7.0** | **NativeAOT**, [GCR Distroless CC](https://github.com/GoogleContainerTools/distroless/tree/main/cc) image | **120MB** |
 
 ## So I should use Self-Contained then, right?
 
