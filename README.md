@@ -1,6 +1,25 @@
 # .NET Static Files - Docker Image Sizes
 
-**UPDATED FOR .NET 6.0 IMAGES AND NEW HOSTING MODEL**
+**UPDATED FOR .NET 8.0 IMAGES and "Chiseled Alpine"**
+
+## Chiseled vs Alpine images
+
+Microsoft and Ubuntu have done some great work recently on reducing image sizes, especially the [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image.
+
+The latest 8.0 preview tags come in as:
+| Tag | Size |
+|---|---|
+| 8.0.0-preview.2-alpine3.17-amd64 | 12.2MB |
+| 8.0.0-preview.2-bookworm-slim-amd64 | 123MB |
+| 8.0.0-preview.2-jammy-chiseled-amd64 | 13MB |
+
+I was still working under the assumption that Chiseled would be smaller than Alpine. But an exchange with Damian Edwards highlighted this not to be the case: https://twitter.com/DamianEdwards/status/1644473764665761792?s=20. The difference seems to come down to the Jammy Chiseled image being based on Ubuntu (and using glibc), whereas Alpine ships with musl.
+
+Personally, I don't like having package managers in my runtime images, so I set about to remove some of that from the Alpine image. The result can be seen in what I'm calling ["Chiseled Alpine"](./alpine-distroless/Dockerfile).
+
+This reduces the 12.2MB Alpine image down to *10.4MB* (and yes, it does still work).
+
+So I've updated the table below to include a .NET 8-based app.
 
 ## Docker Commands
 
@@ -34,10 +53,11 @@ Why is the last one different? Because I've further hardened the image by runnin
 | 9 | .NET 5.0.5 | Self-Contained, Distroless TAKE TWO (Runtime Deps)  | 48.4MB |
 | 10 | .NET 6.0 | Framework-Dependent, Bullseye Slim image | 208MB |
 | 11 | .NET 6.0 | Self-Contained, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | 50.1MB |
-| 12 | **.NET 6.0** | Self-Contained, **Trimmed**, Distroless (Runtime Deps) | **46.4MB** |
+| 12 | .NET 6.0 | Self-Contained, Trimmed, Distroless (Runtime Deps) | 46.4MB |
 | 13 | .NET 7.0 | Framework-Dependent, Bullseye Slim image | 209MB |
-| 14 | **.NET 7.0** | Self-Contained, **Trimmed**, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | **38.9MB** |
-| 15 | **.NET 7.0** | **NativeAOT**, [GCR Distroless CC](https://github.com/GoogleContainerTools/distroless/tree/main/cc) image | **120MB** |
+| 14 | .NET 7.0 | Self-Contained, Trimmed, [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | 38.9MB |
+| 15 | .NET 7.0 | **NativeAOT**, [GCR Distroless CC](https://github.com/GoogleContainerTools/distroless/tree/main/cc) image | 120MB |
+| 16 | **.NET 8.0** | Self-Contained, **Trimmed**, "Chiseled" alpine image based on [Runtime Deps](https://hub.docker.com/_/microsoft-dotnet-runtime-deps/) image | **28.3MB** |
 
 ## So I should use Self-Contained then, right?
 
